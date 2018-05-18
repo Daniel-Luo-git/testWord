@@ -78,20 +78,30 @@ public class Test2 {
 		Word w1 = stdAnswer21.quickKeyWords.get("要求高");
 		Word w2 = stdAnswer31.quickKeyWords.get("考虑");
 		Word w3 = stdAnswer11.quickKeyWords.get("测试用例");
+		Word w4 = stdAnswer23.quickKeyWords.get("覆盖度");
+		Word w5 = stdAnswer33.quickKeyWords.get("低");
 		Word synw11 = new Word("用");
 		Word synw12 = new Word("使用");
 		Word synw21 = new Word("要求较高");
 		Word synw31 = new Word("用例");
+		Word synw22 = new Word("覆盖率");
+		Word synw32 = new Word("不如");
 		List<Word> synonyms1 = new ArrayList<>();
 		List<Word> synonyms2 = new ArrayList<>();
 		List<Word> synonyms3 = new ArrayList<>();
+		List<Word> synonyms4 = new ArrayList<>();
+		List<Word> synonyms5 = new ArrayList<>();
 		synonyms1.add(synw21);
 		synonyms2.add(synw11);
 		synonyms2.add(synw12);
 		synonyms3.add(synw31);
+		synonyms4.add(synw22);
+		synonyms5.add(synw32);
 		w1.setSynonyms(synonyms1);
 		w2.setSynonyms(synonyms2);
 		w3.setSynonyms(synonyms3);
+		w4.setSynonyms(synonyms4);
+		w5.setSynonyms(synonyms5);
 
 		//计算得分
 		try {
@@ -102,6 +112,8 @@ public class Test2 {
 			double curSim = 0;
 			double sim = 0;
 			double totalSim = 0;
+			double stdLen = stdLength(points);
+			double lenSim = 0;
 			List<StdAnswer> StdAnswerList;
 			while(sin.hasNext())
 			{
@@ -110,6 +122,7 @@ public class Test2 {
 				text2 = sin.nextLine();
 				else
 					text2 = "";
+				lenSim = 1-Math.abs(text1.length()+text2.length()-stdLen)/stdLen;
 				for(Point p:points)
 				{
 					StdAnswerList = p.getStdAnswers();
@@ -119,9 +132,12 @@ public class Test2 {
 						if(curSim>sim)
 							sim = curSim;
 					}
-					System.out.print(" "+sim+" ");
 					totalSim = totalSim+sim*p.getWeight();
 					sim = 0;
+				}
+				if(totalSim>0.5)
+				{
+					totalSim = totalSim*0.7+lenSim*0.3;	
 				}
 				curScore = score*totalSim;
 				BigDecimal b = new BigDecimal(curScore);  
@@ -230,18 +246,35 @@ public class Test2 {
 		if(wordSim>0.5)
 		{
 			if(orderSim<0.51)
-				sim = 0;
+				sim = 0.8*wordSim+0.2*orderSim;
 			else
-				sim = 0.4*wordSim+0.6*orderSim;			
+				sim = 0.6*wordSim+0.4*orderSim;			
 		}
 		else
-			sim = 0.5*wordSim+0.5*orderSim;
+			sim = 0.8*wordSim+0.2*orderSim;
 		BigDecimal b = new BigDecimal(sim);  
 		sim = b.setScale(2,BigDecimal.ROUND_HALF_UP).doubleValue();
 		System.out.println("当前得分点相似度："+sim);
 		return sim;
 	}
 	
+	public static double stdLength(List<Point> points)
+	{
+		int stdLen = 0;
+		double aveLen = 0;
+		List<StdAnswer> stdAnswerList;
+		for(Point p:points)
+		{
+			stdAnswerList = p.getStdAnswers();
+			for(StdAnswer s:stdAnswerList)
+			{
+				stdLen+=s.getSentence().length();
+			}
+			aveLen += (double)stdLen/stdAnswerList.size();
+			stdLen = 0;
+		}
+		return aveLen;
+	}
 	public static int checkSynonyms(List<Word> synonyms,String answer)
 	{
 		int loc = -1;
