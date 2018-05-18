@@ -2,7 +2,7 @@ package test;
 
 import java.util.Collections;
 import java.util.List;
-//import java.util.ArrayList;
+import java.util.ArrayList;
 
 public class Point {
 	private List<StdAnswer> StdAnswerList = null;//标答表
@@ -35,6 +35,8 @@ public class Point {
 	
 	public void addStdAnswer(StdAnswer stdAnswer)
 	{
+		if(StdAnswerList==null)
+			StdAnswerList = new ArrayList<>();
 		if(stdAnswer!=null)
 			StdAnswerList.add(stdAnswer);
 	}

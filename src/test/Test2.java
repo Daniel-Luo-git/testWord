@@ -82,13 +82,15 @@ public class Test2 {
 		w3.setSynonyms(synonyms3);
 
 		//计算得分
-		double firSim = 0;
-		double secSim = 0;
 		try {
 			Scanner sin = new Scanner(Paths.get("20180403_22.txt"),"UTF-8");
 			String text1 = null;
 			String text2 = null;
 			StringBuffer buf = new StringBuffer(); 
+			double curSim = 0;
+			double sim = 0;
+			double totalSim = 0;
+			List<StdAnswer> StdAnswerList;
 			while(sin.hasNext())
 			{
 				text1 = sin.nextLine();
@@ -98,22 +100,23 @@ public class Test2 {
 					text2 = "";
 				for(Point p:points)
 				{
-				firSim += computeWithOrder(p,text1+text2)*p.getWeight();
+					StdAnswerList = p.getStdAnswers();
+					for(StdAnswer s:StdAnswerList)
+					{
+						curSim = computeWithOrder(s,text1+text2);
+						if(curSim>sim)
+							sim = curSim;
+					}
+					totalSim = totalSim+sim*p.getWeight();
+					sim = 0;
 				}
-				for(Point p:points)
-				{
-				secSim += computeWithOrder(p,text1+text2)*p.getWeight();
-				}
-				if(firSim>secSim)
-				curScore = score*firSim;
-				else curScore = score*secSim;
+				curScore = score*totalSim;
 				BigDecimal b = new BigDecimal(curScore);  
 				curScore = b.setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();  
 				//curScore = (double)Math.round(curScore*100)/100;//保留两位小数
 				buf.append(text1+text2+"   得分为："+curScore+"\n");
 				System.out.printf("得分为:%6.2f\n",curScore);
-				firSim = 0;
-				secSim = 0;
+				totalSim = 0;
 			}
 			sin.close();
 			PrintWriter out = new PrintWriter("20180403_22evaluated.txt","UTF-8");
@@ -125,13 +128,13 @@ public class Test2 {
 		}
 	}
 	
-	public static double computeWithOrder(Point point,String answer)
+	public static double computeWithOrder(StdAnswer stdAnswer,String answer)
 	{
 		System.out.println("学生回答："+answer);
 		double sim = 0;
 		double wordSim = 0;
 		double orderSim = 0;
-		List<Word> keyWords = point.getWords();
+		List<Word> keyWords = stdAnswer.getKeyWords();
 		List<Word> comWords = new ArrayList<>();
 		List<Word> reOrderWords2 = new ArrayList<>();
 		Map<Word,Integer> wordVec = new HashMap<>();

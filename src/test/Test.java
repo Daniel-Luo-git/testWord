@@ -21,6 +21,7 @@ public class Test {
 
 		Point point1 = new Point(1.0);
 		StdAnswer stdAnswer1 = new StdAnswer(keyWords,sentence);
+		point1.addStdAnswer(stdAnswer1);
 		
 		/*设置同近义词*/
 		Word w = stdAnswer1.quickKeyWords.get("判定/条件覆盖");
@@ -46,16 +47,26 @@ public class Test {
 			Scanner sin = new Scanner(Paths.get("20180403_1.txt"),"GB2312");
 			String text = null;
 			StringBuffer buf = new StringBuffer(); 
+			List<StdAnswer> StdAnswerList = point1.getStdAnswers();
+			double curSim = 0;
+			double sim = 0;
 			while(sin.hasNext())
 			{
 				text = sin.nextLine();
 				System.out.println(text);
-				curScore = score*computeWithoutOrder(point1,text); 
+				for(StdAnswer s:StdAnswerList)
+				{
+					curSim = computeWithoutOrder(s,text);
+					if(curSim>sim)
+						sim = curSim;
+				}
+				curScore = score*sim; 
 				BigDecimal b = new BigDecimal(curScore);  
 				curScore = b.setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();  
 				//curScore = (double)Math.round(curScore*100)/100;//保留两位小数
 				buf.append(text+"   得分为："+curScore+"\n");
 				System.out.printf("得分为:%6.2f\n",curScore);
+				sim = 0;
 			}
 			sin.close();
 			PrintWriter out = new PrintWriter("20180403_1evaluated.txt","GB2312");
