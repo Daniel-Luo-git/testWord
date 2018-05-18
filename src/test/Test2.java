@@ -31,35 +31,47 @@ public class Test2 {
 		points.add(point3);
 		
 		
-		//知识点1标答1、2
+		//知识点1标答1、2、3
 		String [] keyWords11 = {"测试用例","多","弱覆盖"};
 		String sentence11 = "当测试用例数量过多的时候，优先考虑弱覆盖。";
 		String [] keyWords12 = {"弱覆盖","测试用例","数量少","强覆盖","测试用例","数量多"};
 		String sentence12 = "弱覆盖得到的测试用例数量少，而强覆盖得到的测试用例数量多。";
+		String [] keyWords13 = {"强覆盖","测试用例","数量多","弱覆盖","测试用例","数量少"};
+		String sentence13 = "强覆盖得到的测试用例数量多,弱覆盖得到的测试用例数量少。";
 		StdAnswer stdAnswer11 = new StdAnswer(keyWords11,sentence11);
 		point1.addStdAnswer(stdAnswer11);
 		StdAnswer stdAnswer12 = new StdAnswer(keyWords12,sentence12);
 		point1.addStdAnswer(stdAnswer12);
+		StdAnswer stdAnswer13 = new StdAnswer(keyWords13,sentence13);
+		point1.addStdAnswer(stdAnswer13);
 		
-		//知识点2标答1、2
+		//知识点2标答1、2、3
 		String [] keyWords21 = {"测试覆盖","要求高","强覆盖"};
 		String sentence21 = "当对测试覆盖的要求较高的时候，应采用强覆盖，否则，可使用弱覆盖。";
 		String [] keyWords22 = {"弱覆盖","覆盖度","低","强覆盖","覆盖度","高"};
 		String sentence22 = "弱覆盖覆盖度较低，而强覆盖覆盖度高。";
+		String [] keyWords23 = {"强覆盖","覆盖度","高","弱覆盖","覆盖度","低"};
+		String sentence23 = "强覆盖覆盖度高,弱覆盖覆盖度较低。";
 		StdAnswer stdAnswer21 = new StdAnswer(keyWords21,sentence21);
 		point2.addStdAnswer(stdAnswer21);
 		StdAnswer stdAnswer22 = new StdAnswer(keyWords22,sentence22);
 		point2.addStdAnswer(stdAnswer22);
+		StdAnswer stdAnswer23 = new StdAnswer(keyWords23,sentence23);
+		point2.addStdAnswer(stdAnswer23);
 		
-		//知识点3标答1、2
+		//知识点3标答1、2、3
 		String [] keyWords31 = {"时间效率","考虑","弱覆盖"};
 		String sentence31 = "从时间效率来说，当时间较紧的时候，优先考虑弱覆盖。";
 		String [] keyWords32 = {"弱覆盖","时间效率","高","强覆盖","时间效率","低"};
 		String sentence32 = "弱覆盖时间效率高，强覆盖时间效率低。";
+		String [] keyWords33 = {"强覆盖","时间效率","低","弱覆盖","时间效率","高"};
+		String sentence33 = "强覆盖时间效率低,弱覆盖时间效率高。";
 		StdAnswer stdAnswer31 = new StdAnswer(keyWords31,sentence31);
 		point3.addStdAnswer(stdAnswer31);
 		StdAnswer stdAnswer32 = new StdAnswer(keyWords32,sentence32);
 		point3.addStdAnswer(stdAnswer32);
+		StdAnswer stdAnswer33 = new StdAnswer(keyWords33,sentence33);
+		point3.addStdAnswer(stdAnswer33);
 		
 		
 		/*设置同近义词*/
