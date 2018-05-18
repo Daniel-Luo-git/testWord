@@ -47,9 +47,9 @@ public class Test2 {
 		String [] keyWords22 = {"弱覆盖","覆盖度","低","强覆盖","覆盖度","高"};
 		String sentence22 = "弱覆盖覆盖度较低，而强覆盖覆盖度高。";
 		StdAnswer stdAnswer21 = new StdAnswer(keyWords21,sentence21);
-		point1.addStdAnswer(stdAnswer21);
+		point2.addStdAnswer(stdAnswer21);
 		StdAnswer stdAnswer22 = new StdAnswer(keyWords22,sentence22);
-		point1.addStdAnswer(stdAnswer22);
+		point2.addStdAnswer(stdAnswer22);
 		
 		//知识点3标答1、2
 		String [] keyWords31 = {"时间效率","考虑","弱覆盖"};
@@ -57,9 +57,9 @@ public class Test2 {
 		String [] keyWords32 = {"弱覆盖","时间效率","高","强覆盖","时间效率","低"};
 		String sentence32 = "弱覆盖时间效率高，强覆盖时间效率低。";
 		StdAnswer stdAnswer31 = new StdAnswer(keyWords31,sentence31);
-		point1.addStdAnswer(stdAnswer31);
+		point3.addStdAnswer(stdAnswer31);
 		StdAnswer stdAnswer32 = new StdAnswer(keyWords32,sentence32);
-		point1.addStdAnswer(stdAnswer32);
+		point3.addStdAnswer(stdAnswer32);
 		
 		
 		/*设置同近义词*/
@@ -107,6 +107,7 @@ public class Test2 {
 						if(curSim>sim)
 							sim = curSim;
 					}
+					System.out.print(" "+sim+" ");
 					totalSim = totalSim+sim*p.getWeight();
 					sim = 0;
 				}
