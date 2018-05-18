@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="E:/Java/lib/word/commons-pool2-2.0.jar"/>
+	<classpathentry kind="lib" path="E:/Java/lib/word/jedis-2.5.1.jar"/>
+	<classpathentry kind="lib" path="E:/Java/lib/word/logback-classic-0.9.28.jar"/>
+	<classpathentry kind="lib" path="E:/Java/lib/word/logback-core-0.9.28.jar"/>
+	<classpathentry kind="lib" path="E:/Java/lib/word/pinyin4j-2.5.0.jar"/>
+	<classpathentry kind="lib" path="E:/Java/lib/word/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="E:/Java/lib/word/word-1.3.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
