@@ -114,6 +114,7 @@ public class Test2 {
 			double totalSim = 0;
 			double stdLen = stdLength(points);
 			double lenSim = 0;
+			int i = 1;
 			List<StdAnswer> StdAnswerList;
 			while(sin.hasNext())
 			{
@@ -143,8 +144,9 @@ public class Test2 {
 				BigDecimal b = new BigDecimal(curScore);  
 				curScore = b.setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();  
 				//curScore = (double)Math.round(curScore*100)/100;//保留两位小数
-				buf.append(text1+text2+"   得分为："+curScore+"\n");
-				System.out.printf("得分为:%6.2f\n",curScore);
+				buf.append("回答"+i+"："+text1+text2+"   得分为："+curScore+"\n");
+				//System.out.printf("得分为:%6.2f\n",curScore);
+				i++;
 				totalSim = 0;
 			}
 			sin.close();
@@ -245,10 +247,12 @@ public class Test2 {
 		
 		if(wordSim>0.5)
 		{
+			/*
 			if(orderSim<0.51)
 				sim = 0.8*wordSim+0.2*orderSim;
 			else
-				sim = 0.6*wordSim+0.4*orderSim;			
+				sim = 0.6*wordSim+0.4*orderSim;*/
+			sim = 0.5*wordSim+0.5*orderSim;
 		}
 		else
 			sim = 0.8*wordSim+0.2*orderSim;
