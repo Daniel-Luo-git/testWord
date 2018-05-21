@@ -97,6 +97,7 @@ public class Test3 {
 			double stdLen = stdLength(points);
 			double lenSim = 0;
 			StringBuilder tips = new StringBuilder();
+			int i = 1;
 			List<StdAnswer> StdAnswerList;
 			while(sin.hasNext())
 			{
@@ -105,6 +106,7 @@ public class Test3 {
 				text2 = sin.nextLine();
 				else
 					text2 = "";
+				
 				lenSim = 1-Math.abs(text1.length()+text2.length()-stdLen)/stdLen;
 				for(Point p:points)
 				{
@@ -116,7 +118,11 @@ public class Test3 {
 							sim = curSim;
 					}
 					if(sim<0.5)
+					{
+						if(tips.length()==0)
+							tips.append("失分提示：");
 						tips.append(StdAnswerList.get(0).getSentence());
+					}
 					totalSim = totalSim+sim*p.getWeight();
 					sim = 0;
 				}
@@ -128,9 +134,11 @@ public class Test3 {
 				BigDecimal b = new BigDecimal(curScore);  
 				curScore = b.setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();  
 				//curScore = (double)Math.round(curScore*100)/100;//保留两位小数
-				buf.append(text1+text2+"   得分为："+curScore+"\n"+"  失分提示："+tips.toString()+"\n");
+				buf.append("回答"+i+"："+text1+text2+"   得分为："+curScore+"\n"+tips.toString()+"\n\n");
 				System.out.printf("得分为:%6.2f\n",curScore);
+				i++;//计算回答数
 				totalSim = 0;
+				tips.delete(0, tips.length());
 			}
 			sin.close();
 			PrintWriter out = new PrintWriter("20180410_01evaluated.txt","UTF-8");
@@ -163,7 +171,7 @@ public class Test3 {
 			if(KMPImp(answer,w1.getText())!=-1||checkSynonyms(synonyms,answer)!=-1)
 			{
 				comWords.add(w1);
-				wordVec.put(w1, i++);
+				wordVec.put(w1, i++);//词向量映射
 				wordSim+=w1.getWeight();
 			}
 		}
@@ -188,12 +196,9 @@ public class Test3 {
 			loc = wordLoc;
 			else
 			{
-				if(w2.getSynonyms()!=null)
-				{
 				synLoc = checkSynonyms(w2.getSynonyms(),answer);
 				if(synLoc!=-1)
 					loc = synLoc;
-				}
 			}
 			w2.setLocation(loc);
 			if(k==0)
@@ -267,6 +272,8 @@ public class Test3 {
 	public static int checkSynonyms(List<Word> synonyms,String answer)
 	{
 		int loc = -1;
+		if(synonyms==null)
+			return -1;
 		for(Word w:synonyms)
 		{
 			loc = KMPImp(answer,w.getText());
