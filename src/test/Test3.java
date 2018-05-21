@@ -53,7 +53,7 @@ public class Test3 {
 		
 		//知识点3标答1、2
 		String [] keyWords31 = {"测试风险","等价类测试","价值","更大"};
-		String sentence31 = "从测试风险来说，等价类测试业务价值更大，风险更高";
+		String sentence31 = "从测试风险来说，等价类测试业务价值更大，风险更高。";
 		String [] keyWords32 = {"测试风险","等价类测试","重要"};
 		String sentence32 = "从测试风险来说，等价类测试比边界测试测试的对象重要一些。";
 		StdAnswer stdAnswer31 = new StdAnswer(keyWords31,sentence31);
@@ -65,7 +65,7 @@ public class Test3 {
 		String [] keyWords41 = {"测试用例数量","测试冗余","缺陷定位","测试用例","典型性",
 				"测试方法","简洁","时间效率","差别不大"};
 		String sentence41 = "从测试用例数量、测试冗余、缺陷定位、测试用例典型性、"
-				+ "测试方法的简洁性、时间效率等方面，等价类与边界值测试差别不大";
+				+ "测试方法的简洁性、时间效率等方面，等价类与边界值测试差别不大。";
 		String [] keyWords42 = {"其他方面","等价类测试","边界值测试","差别不大"};
 		String sentence42 = "其他方面，等价类测试与边界值测试差别不大。";
 		StdAnswer stdAnswer41 = new StdAnswer(keyWords41,sentence41);
@@ -96,6 +96,7 @@ public class Test3 {
 			double totalSim = 0;
 			double stdLen = stdLength(points);
 			double lenSim = 0;
+			StringBuilder tips = new StringBuilder();
 			List<StdAnswer> StdAnswerList;
 			while(sin.hasNext())
 			{
@@ -114,6 +115,8 @@ public class Test3 {
 						if(curSim>sim)
 							sim = curSim;
 					}
+					if(sim<0.5)
+						tips.append(StdAnswerList.get(0).getSentence());
 					totalSim = totalSim+sim*p.getWeight();
 					sim = 0;
 				}
@@ -125,7 +128,7 @@ public class Test3 {
 				BigDecimal b = new BigDecimal(curScore);  
 				curScore = b.setScale(1,BigDecimal.ROUND_HALF_UP).doubleValue();  
 				//curScore = (double)Math.round(curScore*100)/100;//保留两位小数
-				buf.append(text1+text2+"   得分为："+curScore+"\n");
+				buf.append(text1+text2+"   得分为："+curScore+"\n"+"  失分提示："+tips.toString()+"\n");
 				System.out.printf("得分为:%6.2f\n",curScore);
 				totalSim = 0;
 			}
